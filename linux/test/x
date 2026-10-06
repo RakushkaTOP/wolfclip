@@ -1,0 +1,4 @@
+#!/bin/bash
+# Runs a command inside the test desktop session: DISPLAY + shared D-Bus.
+export DISPLAY=:99 GTK_A11Y=none DBUS_SESSION_BUS_ADDRESS="$(cat /tmp/dbus.addr)"
+exec "$@"

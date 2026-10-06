@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=WolfClip
+GenericName=Clipboard History
+GenericName[ru]=История буфера обмена
+Comment=Clipboard history like Win+V
+Comment[ru]=История буфера обмена как Win+V
+Exec=wolfclip
+Icon=wolfclip
+Terminal=false
+Categories=Utility;GTK;
+Keywords=clipboard;history;paste;copy;буфер;
+StartupNotify=false

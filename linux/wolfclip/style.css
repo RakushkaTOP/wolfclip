@@ -1,0 +1,122 @@
+/* WolfClip — dark minimal by default, light variant under .light */
+
+@define-color wc_accent #4f8cff;
+
+window.wolfclip { background: transparent; }
+
+.panel {
+  border-radius: 16px;
+  background-color: #16171a;
+  color: #ececf0;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.09);
+}
+window.wolfclip.flat .panel { border-radius: 0; box-shadow: none; border: 1px solid rgba(255, 255, 255, 0.12); }
+.panel > separator { background: rgba(255, 255, 255, 0.08); min-height: 1px; }
+
+.header { padding: 14px 14px 11px 16px; }
+.dim { color: rgba(235, 235, 245, 0.55); }
+.small { font-size: 11px; }
+.body { font-size: 13px; }
+.strong { font-weight: 600; font-size: 13px; }
+.mono { font-family: monospace; font-size: 12px; }
+.warn { color: #ff9f0a; }
+.ok { color: #30d158; }
+
+entry.search, entry.search:focus-within {
+  background: none; border: none; box-shadow: none; outline: none;
+  min-height: 26px; padding: 0; font-size: 15px; color: inherit;
+}
+
+.paused {
+  font-size: 10.5px; font-weight: 600; color: #ff9f0a;
+  background: rgba(255, 159, 10, 0.18); border-radius: 999px; padding: 1px 7px;
+}
+
+.header menubutton > button { min-width: 26px; min-height: 26px; padding: 0; border-radius: 8px; color: rgba(235, 235, 245, 0.6); }
+
+button.chip {
+  min-height: 0; padding: 3px 11px; border-radius: 999px; border: none; box-shadow: none;
+  font-size: 12px; font-weight: 500;
+  background: rgba(255, 255, 255, 0.06); color: rgba(235, 235, 245, 0.6);
+}
+button.chip:hover { background: rgba(255, 255, 255, 0.11); }
+button.chip:checked { background: @wc_accent; color: white; }
+
+scrolledwindow, list.clips { background: transparent; }
+list.clips { padding: 8px; }
+list.clips > row.clip {
+  margin: 2px 0; padding: 10px 8px 10px 12px; border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid transparent; color: inherit;
+  outline: none;
+}
+list.clips > row.clip:hover { background: rgba(255, 255, 255, 0.08); }
+list.clips > row.clip:selected {
+  background: alpha(@wc_accent, 0.16); border-color: alpha(@wc_accent, 0.55); color: inherit;
+}
+.section { font-size: 11px; font-weight: 600; color: rgba(235, 235, 245, 0.55); padding: 6px 6px 4px; }
+
+.badge { font-size: 10.5px; font-weight: 500; color: rgba(235, 235, 245, 0.32); margin-right: 4px; }
+button.row-button {
+  min-width: 24px; min-height: 24px; padding: 0; border-radius: 6px;
+  background: none; border: none; box-shadow: none; color: rgba(235, 235, 245, 0.6);
+}
+button.row-button:hover { background: rgba(255, 255, 255, 0.12); }
+
+image.link-icon {
+  color: @wc_accent; background: alpha(@wc_accent, 0.14);
+  border-radius: 8px; padding: 8px;
+}
+.swatch { min-width: 28px; min-height: 28px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.15); }
+.thumb-frame { border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.1); }
+
+.empty-title { font-size: 14px; font-weight: 600; }
+.empty image { color: rgba(235, 235, 245, 0.3); }
+
+.banner {
+  margin: 0 8px 8px; padding: 10px; border-radius: 10px;
+  background: rgba(255, 159, 10, 0.1);
+}
+.banner-title { font-size: 12px; font-weight: 600; }
+
+.footer { padding: 9px 14px 9px 16px; }
+.key {
+  font-size: 10.5px; font-weight: 600; padding: 1px 5px; border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08); color: rgba(235, 235, 245, 0.7);
+}
+
+/* Settings */
+window.wolfclip-settings { background: #1c1c1f; color: #ececf0; }
+.settings-page { padding: 28px 28px 32px; }
+.title { font-size: 22px; font-weight: 700; }
+.group-title { font-weight: 600; font-size: 13px; margin-left: 4px; }
+.card { background: rgba(255, 255, 255, 0.05); border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.06); }
+.card-row { padding: 9px 14px; min-height: 32px; }
+.card > separator { margin: 0 14px; background: rgba(255, 255, 255, 0.07); min-height: 1px; }
+.code { background: rgba(255, 255, 255, 0.07); padding: 6px 10px; border-radius: 8px; }
+.footnote { margin: 2px 4px 0; }
+button.destructive { color: #ff6961; }
+
+/* Light */
+window.wolfclip.light .panel {
+  background-color: #fafafb; color: #1d1d1f;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+.light .panel > separator { background: rgba(0, 0, 0, 0.08); }
+.light .dim, .light .section { color: rgba(60, 60, 67, 0.62); }
+.light .header menubutton > button, .light button.row-button { color: rgba(60, 60, 67, 0.7); }
+.light button.chip { background: rgba(0, 0, 0, 0.05); color: rgba(60, 60, 67, 0.75); }
+.light button.chip:hover { background: rgba(0, 0, 0, 0.09); }
+.light button.chip:checked { background: @wc_accent; color: white; }
+.light list.clips > row.clip { background: rgba(0, 0, 0, 0.035); }
+.light list.clips > row.clip:hover { background: rgba(0, 0, 0, 0.065); }
+.light list.clips > row.clip:selected { background: alpha(@wc_accent, 0.13); border-color: alpha(@wc_accent, 0.5); }
+.light .badge { color: rgba(60, 60, 67, 0.4); }
+.light button.row-button:hover { background: rgba(0, 0, 0, 0.08); }
+.light .key { background: rgba(0, 0, 0, 0.06); color: rgba(60, 60, 67, 0.75); }
+.light .swatch { border-color: rgba(0, 0, 0, 0.15); }
+.light .thumb-frame { border-color: rgba(0, 0, 0, 0.1); }
+.light .empty image { color: rgba(60, 60, 67, 0.3); }
+window.wolfclip-settings.light { background: #f5f5f7; color: #1d1d1f; }
+.light .card { background: white; border-color: rgba(0, 0, 0, 0.07); }
+.light .card > separator { background: rgba(0, 0, 0, 0.07); }
+.light .code { background: rgba(0, 0, 0, 0.05); }
