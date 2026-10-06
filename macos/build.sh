@@ -36,6 +36,7 @@ if [[ -n "${WOLFCLIP_DEBUG:-}" ]]; then
   plutil -replace CFBundleURLTypes.0.CFBundleURLSchemes.0 -string wolfclip-debug "$APP/Contents/Info.plist"
 fi
 cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
+cp ../LICENSE ../NOTICE "$APP/Contents/Resources/"
 # Ad-hoc signature with a designated requirement by bundle id (not by binary hash),
 # so the Accessibility permission survives rebuilds.
 BUNDLE_ID=$(plutil -extract CFBundleIdentifier raw "$APP/Contents/Info.plist")

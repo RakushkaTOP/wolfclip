@@ -11,7 +11,7 @@ Press one shortcut in any app, pick anything you copied earlier, and it lands ri
 [![Download](https://img.shields.io/github/v/release/RakushkaTOP/wolfclip?label=download&color=4F8CFF)](https://github.com/RakushkaTOP/wolfclip/releases/latest)
 ![macOS 14+](https://img.shields.io/badge/macOS-14%2B-111?logo=apple)
 ![Linux](https://img.shields.io/badge/Linux-GTK%204-111?logo=linux&logoColor=white)
-[![MIT License](https://img.shields.io/badge/license-MIT-111)](LICENSE)
+[![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-111)](LICENSE)
 
 English · [Русский](README.ru.md)
 
@@ -134,4 +134,4 @@ The shortcut can be changed in Settings. On macOS, `⇧⌘V` replaces "Paste and
 
 ## License
 
-[MIT](LICENSE) © RakushkaTOP. Use it, change it, ship it, even commercially. Just keep the copyright notice and credit the author.
+[Apache 2.0](LICENSE) © RakushkaTOP. Use it, change it, ship it, even commercially. When you redistribute it, keep the copyright, the license and the [NOTICE](NOTICE) file that credits the author, and mark what you changed.

@@ -11,7 +11,7 @@
 [![Скачать](https://img.shields.io/github/v/release/RakushkaTOP/wolfclip?label=скачать&color=4F8CFF)](https://github.com/RakushkaTOP/wolfclip/releases/latest)
 ![macOS 14+](https://img.shields.io/badge/macOS-14%2B-111?logo=apple)
 ![Linux](https://img.shields.io/badge/Linux-GTK%204-111?logo=linux&logoColor=white)
-[![Лицензия MIT](https://img.shields.io/badge/лицензия-MIT-111)](LICENSE)
+[![Лицензия Apache 2.0](https://img.shields.io/badge/лицензия-Apache%202.0-111)](LICENSE)
 
 [English](README.md) · Русский
 
@@ -134,4 +134,4 @@ cd wolfclip-linux && ./install.sh
 
 ## Лицензия
 
-[MIT](LICENSE) © RakushkaTOP. Используй, меняй, распространяй, в том числе в коммерческих проектах. Главное — сохраняй уведомление об авторских правах и указывай автора.
+[Apache 2.0](LICENSE) © RakushkaTOP. Используй, меняй, распространяй, в том числе в коммерческих проектах. При распространении сохраняй копирайт, текст лицензии и файл [NOTICE](NOTICE) с указанием автора, а изменённые файлы помечай.
