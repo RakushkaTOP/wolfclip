@@ -4,14 +4,18 @@ import SwiftUI
 final class SettingsWindow {
     private var window: NSWindow?
     private let store: HistoryStore
+    private let updater: Updater
 
-    init(store: HistoryStore) {
+    init(store: HistoryStore, updater: Updater) {
         self.store = store
+        self.updater = updater
     }
+
+    var isVisible: Bool { window?.isVisible ?? false }
 
     func show() {
         if window == nil {
-            let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 500, height: 790),
+            let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 500, height: 860),
                              styleMask: [.titled, .closable, .fullSizeContentView],
                              backing: .buffered, defer: false)
             w.title = "WolfClip"
@@ -19,7 +23,7 @@ final class SettingsWindow {
             w.titlebarAppearsTransparent = true
             w.isMovableByWindowBackground = true
             w.isReleasedWhenClosed = false
-            w.contentView = NSHostingView(rootView: SettingsView(store: store))
+            w.contentView = NSHostingView(rootView: SettingsView(store: store, updater: updater))
             w.center()
             window = w
         }
@@ -31,6 +35,7 @@ final class SettingsWindow {
 
 struct SettingsView: View {
     @ObservedObject var store: HistoryStore
+    @ObservedObject var updater: Updater
     @ObservedObject private var prefs = Prefs.shared
     @State private var axTrusted = Accessibility.trusted
     @State private var launchAtLogin = LoginItem.isEnabled
@@ -38,9 +43,7 @@ struct SettingsView: View {
     @State private var diskUsage: Int64 = 0
     private let tick = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
-    private var version: String {
-        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "1.0"
-    }
+    private var version: String { Updater.currentVersion }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -105,6 +108,17 @@ struct SettingsView: View {
                         .foregroundStyle(.secondary)
                 }
 
+                Section(tr("Обновления", "Updates")) {
+                    Toggle(tr("Обновлять автоматически", "Update automatically"), isOn: $prefs.autoUpdate)
+                    HStack {
+                        Text(updateStatus)
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button(tr("Проверить сейчас", "Check Now")) { Task { await updater.check(manual: true) } }
+                            .disabled(updateBusy)
+                    }
+                }
+
                 Section(tr("Приватность", "Privacy")) {
                     Label(tr("Пароли из менеджеров паролей не записываются", "Passwords from password managers are never recorded"), systemImage: "lock.shield")
                     Label(tr("История хранится только на этом Mac", "History is stored only on this Mac"), systemImage: "internaldrive")
@@ -112,7 +126,7 @@ struct SettingsView: View {
             }
             .formStyle(.grouped)
         }
-        .frame(width: 500, height: 790)
+        .frame(width: 500, height: 860)
         .onAppear(perform: refresh)
         .onReceive(tick) { _ in axTrusted = Accessibility.trusted }
         .onChange(of: store.items.count) { _, _ in diskUsage = store.diskUsage() }
@@ -148,6 +162,24 @@ struct SettingsView: View {
         .padding(.horizontal, 28)
         .padding(.top, 38)
         .padding(.bottom, 2)
+    }
+
+    private var updateBusy: Bool {
+        switch updater.status {
+        case .checking, .downloading, .installing: return true
+        default: return false
+        }
+    }
+
+    private var updateStatus: String {
+        switch updater.status {
+        case .idle: return tr("Новые версии ставятся сами, без окон", "New versions install silently")
+        case .checking: return tr("Проверяю…", "Checking…")
+        case .upToDate: return tr("Установлена последняя версия", "You’re up to date")
+        case .downloading(let v): return tr("Скачиваю v\(v)…", "Downloading v\(v)…")
+        case .installing(let v): return tr("Ставлю v\(v) — WolfClip перезапустится", "Installing v\(v) — WolfClip will restart")
+        case .failed(let message): return tr("Не вышло: ", "Failed: ") + message
+        }
     }
 
     private func refresh() {

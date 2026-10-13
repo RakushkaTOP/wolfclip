@@ -19,12 +19,22 @@ final class ClipboardMonitor {
         "net.antelle.keeweb",
     ]
 
+    /// Pasteboard change count handed over from the process that restarted for an update.
+    private static let resumeKey = "resumeChangeCount"
+
     private static let richLimit = 400_000
     private static let imageLimit = 40_000_000
 
     init(store: HistoryStore) {
         self.store = store
-        lastChange = pb.changeCount
+        let defaults = UserDefaults.standard
+        if let resumed = defaults.object(forKey: Self.resumeKey) as? Int {
+            // Restarted after an update: the first poll records whatever was copied during the restart.
+            lastChange = resumed
+            defaults.removeObject(forKey: Self.resumeKey)
+        } else {
+            lastChange = pb.changeCount
+        }
     }
 
     func start() {
@@ -37,6 +47,12 @@ final class ClipboardMonitor {
     /// Call right after WolfClip itself wrote to the pasteboard so the write is not recorded again.
     func skipCurrent() {
         lastChange = pb.changeCount
+    }
+
+    /// Right before an update restart: record the pending copy and hand the position to the next process.
+    func handOver() {
+        poll()
+        UserDefaults.standard.set(lastChange, forKey: Self.resumeKey)
     }
 
     private func poll() {

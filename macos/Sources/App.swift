@@ -17,7 +17,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
     private let store = HistoryStore()
     private lazy var monitor = ClipboardMonitor(store: store)
     private lazy var panel = PanelController(store: store, monitor: monitor)
-    private lazy var settingsWindow = SettingsWindow(store: store)
+    private let updater = Updater()
+    private lazy var settingsWindow = SettingsWindow(store: store, updater: updater)
     private let hotKey = HotKey()
     private var statusItem: NSStatusItem!
     private var bag = Set<AnyCancellable>()
@@ -47,6 +48,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             .store(in: &bag)
         prefs.$paused
             .sink { [weak self] paused in self?.statusItem?.button?.appearsDisabled = paused }
+            .store(in: &bag)
+
+        // Restart only when nothing is on screen and no paste is in flight.
+        updater.canRestartNow = { [weak self] in
+            guard let self else { return false }
+            return !self.panel.isVisible && Date().timeIntervalSince(self.panel.lastClosed) > 10
+                && !self.settingsWindow.isVisible && NSApp.modalWindow == nil
+        }
+        updater.willRestart = { [weak self] in self?.monitor.handOver() }
+        updater.start()
+        prefs.$autoUpdate.dropFirst()
+            .sink { [weak self] _ in DispatchQueue.main.async { self?.updater.start() } }
             .store(in: &bag)
 
         if !prefs.onboarded {

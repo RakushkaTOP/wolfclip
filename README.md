@@ -55,6 +55,8 @@ English · [Русский](README.ru.md)
 
 WolfClip lives in the menu bar and starts at login. Press **⇧⌘V** anywhere.
 
+Updates install themselves. WolfClip checks GitHub Releases at launch and every 6 hours, verifies the download's SHA-256 and code signature, then swaps itself in place and restarts while the history window is closed. History, pinned items, settings and the Accessibility permission stay as they were. You can turn this off or check by hand in **Settings → Updates**. Version 1.0.0 has no updater, so install 1.0.1 by hand once.
+
 <details>
 <summary>Build from source</summary>
 
@@ -114,7 +116,7 @@ The shortcut can be changed in Settings. On macOS, `⇧⌘V` replaces "Paste and
 ## Privacy
 
 - Items that password managers mark as secret are skipped: the `org.nspasteboard` concealed and transient markers on macOS, the KDE password-manager hint on Linux.
-- History is a local file: `~/Library/Application Support/WolfClip` on macOS, `~/.local/share/wolfclip` on Linux. Nothing is sent anywhere.
+- History is a local file: `~/Library/Application Support/WolfClip` on macOS, `~/.local/share/wolfclip` on Linux. Nothing from it is sent anywhere. The only network request is the update check on macOS: a plain GET to the GitHub Releases API.
 - You can pause recording at any time from the menu.
 
 <br>

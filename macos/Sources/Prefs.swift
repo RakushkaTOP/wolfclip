@@ -86,6 +86,7 @@ final class Prefs: ObservableObject {
     @Published var historyLimit: Int { didSet { d.set(historyLimit, forKey: "historyLimit") } }
     @Published var saveImages: Bool { didSet { d.set(saveImages, forKey: "saveImages") } }
     @Published var paused: Bool { didSet { d.set(paused, forKey: "paused") } }
+    @Published var autoUpdate: Bool { didSet { d.set(autoUpdate, forKey: "autoUpdate") } }
     /// Not persisted: true when another app already owns the chosen shortcut.
     @Published var hotKeyTaken = false
 
@@ -103,6 +104,7 @@ final class Prefs: ObservableObject {
             "historyLimit": 200,
             "saveImages": true,
             "paused": false,
+            "autoUpdate": true,
         ])
         hotKey = HotKeyPreset(rawValue: d.string(forKey: "hotKey") ?? "") ?? .shiftCmdV
         theme = Theme(rawValue: d.string(forKey: "theme") ?? "") ?? .dark
@@ -111,5 +113,6 @@ final class Prefs: ObservableObject {
         historyLimit = d.integer(forKey: "historyLimit")
         saveImages = d.bool(forKey: "saveImages")
         paused = d.bool(forKey: "paused")
+        autoUpdate = d.bool(forKey: "autoUpdate")
     }
 }
