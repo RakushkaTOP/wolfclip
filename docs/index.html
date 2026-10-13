@@ -155,6 +155,10 @@ summary { cursor: pointer; font-weight: 600; }
 details p { color: var(--muted); margin: 10px 0 0; }
 kbd { font: 13px ui-monospace, Menlo, monospace; background: var(--code); border: 1px solid var(--line);
   border-radius: 5px; padding: 1px 6px; }
+@media (max-width: 600px) {
+  h1 br { display: none; }
+  .brew code { white-space: normal; overflow-wrap: anywhere; }
+}
 footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; text-align: center; border-top: 1px solid var(--line); }
 </style>
 </head>
