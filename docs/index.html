@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WolfClip — free clipboard history for Mac and Linux (Win+V for macOS)</title>
+<meta name="description" content="WolfClip is a free, open-source clipboard manager for macOS and Linux. Press ⇧⌘V in any app, pick anything you copied earlier — text, links, images, files — and it pastes right where you type.">
+<link rel="canonical" href="https://rakushkatop.github.io/wolfclip/">
+<link rel="alternate" type="text/plain" href="https://rakushkatop.github.io/wolfclip/llms.txt" title="llms.txt">
+<meta property="og:type" content="website">
+<meta property="og:title" content="WolfClip — clipboard history for Mac and Linux">
+<meta property="og:description" content="Free and open source. Win+V style clipboard history: one shortcut, pick, paste.">
+<meta property="og:url" content="https://rakushkatop.github.io/wolfclip/">
+<meta property="og:image" content="https://rakushkatop.github.io/wolfclip/themes.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "WolfClip",
+  "description": "Free, open-source clipboard history manager for macOS and Linux with a Win+V style panel: search, filters, pins, images and files, instant paste into the app you were typing in.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "macOS 14 or later, Linux (GTK 4)",
+  "softwareVersion": "1.0.1",
+  "license": "https://www.apache.org/licenses/LICENSE-2.0",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "downloadUrl": "https://github.com/RakushkaTOP/wolfclip/releases/latest",
+  "installUrl": "https://github.com/RakushkaTOP/homebrew-tap",
+  "codeRepository": "https://github.com/RakushkaTOP/wolfclip",
+  "screenshot": "https://rakushkatop.github.io/wolfclip/themes.png",
+  "url": "https://rakushkatop.github.io/wolfclip/",
+  "author": { "@type": "Person", "name": "RakushkaTOP", "url": "https://github.com/RakushkaTOP" }
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Is there a Win+V clipboard history on Mac?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Not the Windows kind. WolfClip adds one: press ⇧⌘V in any app, pick an item and it is pasted where you were typing. The shortcut can be changed in Settings."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Doesn't macOS Tahoe already have clipboard history?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. Since macOS 26, Spotlight has a Clipboard section. It is off by default and keeps items for up to 30 days. WolfClip adds pins that never expire, image and file previews, filters, ⌘1–⌘9 and paste straight into the app you were in. It also works on macOS 14 and 15 and on Linux."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Is WolfClip free?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. It is free and open source under the Apache 2.0 license, with no subscription and no account."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "How do I install it with Homebrew?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Run: brew install --cask rakushkatop/tap/wolfclip. Then open WolfClip and allow Accessibility so it can paste for you."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does it record passwords?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "No. Items that password managers mark as secret (the org.nspasteboard concealed and transient types) are skipped. The history is a local file on your computer and is never uploaded."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Why does macOS say it can't verify WolfClip?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "WolfClip is ad-hoc signed and not notarized by Apple. The Homebrew cask takes care of this. If you downloaded the zip by hand, open System Settings → Privacy & Security and click Open Anyway, or run xattr -dr com.apple.quarantine /Applications/WolfClip.app."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does it update itself?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. The macOS app checks GitHub Releases at launch and every 6 hours, verifies the download's SHA-256 and code signature, and restarts while the history window is closed. History, pins and settings are kept. You can turn this off in Settings."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Does it work on Linux?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Yes. On X11 everything is built in: Super+V, auto-paste and placement at the mouse pointer. Wayland is in beta: bind wolfclip --toggle in system settings, and auto-paste needs wtype or ydotool."
+   }
+  }
+ ]
+}
+</script>
+<style>
+:root {
+  --bg: #0e0f11; --panel: #16181b; --line: #25282d; --text: #eceef1; --muted: #9aa0a8;
+  --accent: #4f8cff; --code: #1c1f23;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f7f7f9; --panel: #ffffff; --line: #e3e5e9; --text: #15171a; --muted: #5d636b; --code: #eef0f3;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+header { padding: 72px 0 40px; text-align: center; }
+header img.icon { width: 96px; height: 96px; }
+h1 { font-size: clamp(32px, 6vw, 48px); line-height: 1.1; margin: 16px 0 12px; letter-spacing: -0.02em; }
+.lead { font-size: clamp(17px, 2.4vw, 20px); color: var(--muted); max-width: 640px; margin: 0 auto 28px; }
+.cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; align-items: center; }
+.btn { display: inline-block; padding: 12px 20px; border-radius: 10px; background: var(--accent); color: #fff;
+  font-weight: 600; }
+.btn:hover { text-decoration: none; filter: brightness(1.08); }
+.btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.brew { display: flex; align-items: center; gap: 8px; margin: 22px auto 0; max-width: 520px; background: var(--code);
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 10px 10px 16px; }
+.brew code { flex: 1; font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; overflow-x: auto;
+  white-space: nowrap; text-align: left; }
+.brew button { border: 1px solid var(--line); background: var(--panel); color: var(--text); border-radius: 7px;
+  padding: 6px 10px; font: inherit; font-size: 13px; cursor: pointer; }
+.note { color: var(--muted); font-size: 13.5px; margin-top: 10px; }
+.shot { display: block; width: 100%; max-width: 620px; margin: 48px auto 0; border-radius: 14px; }
+section { padding: 56px 0; border-top: 1px solid var(--line); }
+h2 { font-size: 26px; margin: 0 0 20px; letter-spacing: -0.01em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.card h3 { margin: 0 0 6px; font-size: 16px; }
+.card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.table { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14.5px; min-width: 560px; }
+th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 600; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin-bottom: 10px; }
+summary { cursor: pointer; font-weight: 600; }
+details p { color: var(--muted); margin: 10px 0 0; }
+kbd { font: 13px ui-monospace, Menlo, monospace; background: var(--code); border: 1px solid var(--line);
+  border-radius: 5px; padding: 1px 6px; }
+footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; text-align: center; border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+<main>
+<header class="wrap">
+  <img class="icon" src="icon.png" alt="WolfClip icon" width="96" height="96">
+  <h1>Clipboard history for Mac,<br>the way Win+V works on Windows</h1>
+  <p class="lead">WolfClip is a free, open-source clipboard manager for macOS and Linux. Press <kbd>⇧⌘V</kbd> in any app, pick anything you copied earlier, and it pastes right where you type.</p>
+  <div class="cta">
+    <a class="btn" href="https://github.com/RakushkaTOP/wolfclip/releases/latest">Download for macOS</a>
+    <a class="btn ghost" href="https://github.com/RakushkaTOP/wolfclip#linux">Linux</a>
+    <a class="btn ghost" href="https://github.com/RakushkaTOP/wolfclip">Source on GitHub</a>
+  </div>
+  <div class="brew">
+    <code id="brew-cmd">brew install --cask rakushkatop/tap/wolfclip</code>
+    <button type="button" id="copy">Copy</button>
+  </div>
+  <p class="note">macOS 14 Sonoma or later · Apple silicon and Intel · Apache 2.0 · updates itself</p>
+  <img class="shot" src="demo.gif" alt="WolfClip: open, browse, search, filter and pin clipboard history" width="620">
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>What it does</h2>
+    <div class="grid">
+      <div class="card"><h3>Instant paste</h3><p>Pick an item and WolfClip pastes it into the app you were in. No extra keystrokes.</p></div>
+      <div class="card"><h3>Everything you copy</h3><p>Text, links, colors, code, images and Finder files, each shown the way it reads best.</p></div>
+      <div class="card"><h3>Find it in a second</h3><p>Type to search (any language), <kbd>Tab</kbd> through filters, <kbd>⌘1</kbd>–<kbd>⌘9</kbd> for the first nine items.</p></div>
+      <div class="card"><h3>Pins that stay</h3><p>Keep addresses, snippets and templates on top. Pinned items never expire.</p></div>
+      <div class="card"><h3>Private by design</h3><p>Passwords from password managers are never recorded. History stays on your computer.</p></div>
+      <div class="card"><h3>Native and light</h3><p>Swift and SwiftUI on macOS, GTK 4 on Linux. No Electron, near-zero CPU while idle.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <h2>WolfClip and other clipboard managers</h2>
+    <div class="table">
+      <table>
+        <thead><tr><th>App</th><th>Price</th><th>Source</th><th>Runs on</th></tr></thead>
+        <tbody>
+        <tr><td>WolfClip</td><td>Free</td><td>Open source, Apache 2.0</td><td>macOS 14+, Linux</td></tr>
+        <tr><td>Maccy</td><td>Free on GitHub, $9.99 in the Mac App Store</td><td>Open source, MIT</td><td>macOS</td></tr>
+        <tr><td>CopyQ</td><td>Free</td><td>Open source, GPL-3.0</td><td>macOS, Linux, Windows</td></tr>
+        <tr><td>Spotlight clipboard</td><td>Built into macOS 26, off by default</td><td>Apple</td><td>macOS 26+</td></tr>
+        <tr><td>Raycast</td><td>Clipboard history in the free plan (3 months), Pro $10/month</td><td>Closed source</td><td>macOS</td></tr>
+        <tr><td>PastePal</td><td>Free, Pro $14.99 once</td><td>Closed source</td><td>macOS</td></tr>
+        <tr><td>Paste</td><td>$2.49/month or $29.99/year</td><td>Closed source</td><td>macOS</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Prices and licenses as listed by each project in October 2026. Maccy and CopyQ are great open-source picks too; WolfClip is for people who want the Windows-style flow: one shortcut, pick, and it is pasted.</p>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <div>
+    <details><summary>Is there a Win+V clipboard history on Mac?</summary><p>Not the Windows kind. WolfClip adds one: press ⇧⌘V in any app, pick an item and it is pasted where you were typing. The shortcut can be changed in Settings.</p></details>
+    <details><summary>Doesn&#x27;t macOS Tahoe already have clipboard history?</summary><p>Yes. Since macOS 26, Spotlight has a Clipboard section. It is off by default and keeps items for up to 30 days. WolfClip adds pins that never expire, image and file previews, filters, ⌘1–⌘9 and paste straight into the app you were in. It also works on macOS 14 and 15 and on Linux.</p></details>
+    <details><summary>Is WolfClip free?</summary><p>Yes. It is free and open source under the Apache 2.0 license, with no subscription and no account.</p></details>
+    <details><summary>How do I install it with Homebrew?</summary><p>Run: brew install --cask rakushkatop/tap/wolfclip. Then open WolfClip and allow Accessibility so it can paste for you.</p></details>
+    <details><summary>Does it record passwords?</summary><p>No. Items that password managers mark as secret (the org.nspasteboard concealed and transient types) are skipped. The history is a local file on your computer and is never uploaded.</p></details>
+    <details><summary>Why does macOS say it can&#x27;t verify WolfClip?</summary><p>WolfClip is ad-hoc signed and not notarized by Apple. The Homebrew cask takes care of this. If you downloaded the zip by hand, open System Settings → Privacy &amp; Security and click Open Anyway, or run xattr -dr com.apple.quarantine /Applications/WolfClip.app.</p></details>
+    <details><summary>Does it update itself?</summary><p>Yes. The macOS app checks GitHub Releases at launch and every 6 hours, verifies the download&#x27;s SHA-256 and code signature, and restarts while the history window is closed. History, pins and settings are kept. You can turn this off in Settings.</p></details>
+    <details><summary>Does it work on Linux?</summary><p>Yes. On X11 everything is built in: Super+V, auto-paste and placement at the mouse pointer. Wayland is in beta: bind wolfclip --toggle in system settings, and auto-paste needs wtype or ydotool.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  WolfClip by <a href="https://github.com/RakushkaTOP">RakushkaTOP</a> · <a href="https://github.com/RakushkaTOP/wolfclip/blob/main/LICENSE">Apache 2.0</a> · <a href="https://github.com/RakushkaTOP/wolfclip/blob/main/README.ru.md">По-русски</a>
+</footer>
+
+<script>
+document.getElementById("copy").addEventListener("click", async (e) => {
+  try {
+    await navigator.clipboard.writeText(document.getElementById("brew-cmd").textContent);
+    e.target.textContent = "Copied";
+    setTimeout(() => (e.target.textContent = "Copy"), 1500);
+  } catch {}
+});
+</script>
+</body>
+</html>

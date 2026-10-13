@@ -1,0 +1,21 @@
+# WolfClip
+
+> WolfClip is a free, open-source (Apache-2.0) clipboard history manager for macOS 14+ and Linux (GTK 4). It brings the Windows Win+V experience to the Mac: press ⇧⌘V in any app, pick anything copied earlier (text, links, colors, code, images, Finder files) and it is pasted straight into the app you were typing in.
+
+Install on macOS: `brew install --cask rakushkatop/tap/wolfclip`, or download WolfClip-macOS.zip from the latest GitHub release. Install on Linux: download wolfclip-linux.tar.gz and run `./install.sh`.
+
+Key facts:
+- Price: free. License: Apache-2.0. Author: RakushkaTOP.
+- Native: Swift/SwiftUI menu-bar app on macOS (Apple silicon and Intel), Python + GTK 4 on Linux. No Electron, near-zero idle CPU.
+- Features: instant auto-paste, search in any language, filters (text, links, images, files), ⌘1–⌘9 quick paste, paste as plain text, pins, dark/light theme, English and Russian UI.
+- Privacy: history is stored locally only; items marked as passwords by password managers (org.nspasteboard concealed/transient types) are never recorded. The only network request is the macOS update check against GitHub Releases.
+- Updates: the macOS app updates itself silently from GitHub Releases (SHA-256 and code-signature checked).
+- Limitations: the macOS app is ad-hoc signed and not notarized by Apple (the Homebrew cask handles this); Wayland support on Linux is beta.
+
+## Links
+
+- [Website](https://rakushkatop.github.io/wolfclip/)
+- [Source code and README](https://github.com/RakushkaTOP/wolfclip)
+- [Latest release](https://github.com/RakushkaTOP/wolfclip/releases/latest)
+- [Homebrew tap](https://github.com/RakushkaTOP/homebrew-tap)
+- [README in Russian](https://github.com/RakushkaTOP/wolfclip/blob/main/README.ru.md)

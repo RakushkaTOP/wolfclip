@@ -13,7 +13,7 @@ Press one shortcut in any app, pick anything you copied earlier, and it lands ri
 ![Linux](https://img.shields.io/badge/Linux-GTK%204-111?logo=linux&logoColor=white)
 [![Apache 2.0 License](https://img.shields.io/badge/license-Apache%202.0-111)](LICENSE)
 
-English · [Русский](README.ru.md)
+[Website](https://rakushkatop.github.io/wolfclip/) · English · [Русский](README.ru.md)
 
 <br>
 
@@ -45,6 +45,16 @@ English · [Русский](README.ru.md)
 ## Install
 
 ### macOS
+
+With [Homebrew](https://brew.sh):
+
+```bash
+brew install --cask rakushkatop/tap/wolfclip
+```
+
+Then open WolfClip and allow **Accessibility** when it asks (step 3 below).
+
+Or by hand:
 
 1. Download **WolfClip-macOS.zip** from the [latest release](https://github.com/RakushkaTOP/wolfclip/releases/latest) and drag **WolfClip** into **Applications**.
 2. Open it. The app is not notarized by Apple, so the first time macOS asks you to confirm. Open **System Settings → Privacy & Security** and click **Open Anyway**, or run:
@@ -110,6 +120,36 @@ X11 is the tested setup. On Wayland, WolfClip runs through XWayland to follow th
 | Clear search, close | `Esc` | `Esc` |
 
 The shortcut can be changed in Settings. On macOS, `⇧⌘V` replaces "Paste and Match Style" in the apps that use it. Pick `⌥⌘V` or another option if you rely on it.
+
+<br>
+
+## Compared with other clipboard managers
+
+| | Price | Source | Runs on |
+|---|---|---|---|
+| **WolfClip** | Free | Open source, Apache 2.0 | macOS 14+, Linux |
+| [Maccy](https://github.com/p0deje/Maccy) | Free on GitHub, $9.99 in the Mac App Store | Open source, MIT | macOS |
+| [CopyQ](https://github.com/hluk/CopyQ) | Free | Open source, GPL-3.0 | macOS, Linux, Windows |
+| Spotlight clipboard | Built into macOS 26, off by default | Apple | macOS 26+ |
+| [Raycast](https://www.raycast.com/pricing) | Clipboard history in the free plan (3 months), Pro $10/month | Closed source | macOS |
+| [PastePal](https://apps.apple.com/us/app/clipboard-manager-pastepal/id1503446680) | Free, Pro $14.99 once | Closed source | macOS |
+| [Paste](https://pasteapp.io/pricing) | $2.49/month or $29.99/year | Closed source | macOS |
+
+Prices and licenses as listed by each project in October 2026. Maccy and CopyQ are great open-source picks too. WolfClip is for people who want the Windows-style flow: one shortcut, pick, and it is pasted.
+
+<br>
+
+## FAQ
+
+**Is there a Win+V clipboard history on Mac?** Not the Windows kind. WolfClip adds one: press `⇧⌘V` in any app, pick an item and it is pasted where you were typing.
+
+**Doesn't macOS Tahoe already have clipboard history?** Yes. Since macOS 26, Spotlight has a Clipboard section. It is off by default and keeps items for up to 30 days. WolfClip adds pins that never expire, image and file previews, filters, `⌘1`–`⌘9` and paste straight into the app you were in. It also works on macOS 14 and 15 and on Linux.
+
+**Is it free?** Yes. Free and open source under Apache 2.0, with no subscription and no account.
+
+**Does it record passwords?** No. Items that password managers mark as secret are skipped, and the history never leaves your computer.
+
+**Why does macOS say it can't verify WolfClip?** It is ad-hoc signed, not notarized by Apple. Homebrew takes care of this. For a manual download, see step 2 of [Install](#macos).
 
 <br>
 
