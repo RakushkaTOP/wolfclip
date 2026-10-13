@@ -94,6 +94,9 @@ struct HistoryView: View {
                 .padding(.horizontal, 8)
                 .padding(.vertical, 8)
             }
+            // A fresh scroll view on every show: it starts at the very top, even if a tall image
+            // row was added while the panel was hidden (scrollTo alone left it under the header).
+            .id(model.showID)
             .onChange(of: model.scrollRequest) { _, request in
                 guard let request else { return }
                 let scroll = {

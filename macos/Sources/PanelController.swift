@@ -44,6 +44,7 @@ final class PanelModel: ObservableObject {
     @Published private(set) var pinned: [ClipItem] = []
     @Published private(set) var recent: [ClipItem] = []
     @Published var scrollRequest: ScrollRequest?
+    @Published private(set) var showID = UUID()
     @Published var axTrusted = true
 
     private var lastQuery = ""
@@ -80,7 +81,7 @@ final class PanelModel: ObservableObject {
         query = ""
         filter = .all
         selectedID = flat.first?.id
-        scrollRequest = ScrollRequest(target: .top, animated: false)
+        showID = UUID()
     }
 
     func move(_ delta: Int) {
@@ -165,6 +166,8 @@ final class PanelController: NSObject, NSWindowDelegate {
     }
 
     var isVisible: Bool { panel.isVisible }
+    /// When the panel was last closed; a paste may still be in flight right after that.
+    private(set) var lastClosed = Date.distantPast
 
     private func buildPanel() {
         let panel = ClipPanel(contentRect: NSRect(origin: .zero, size: Self.size),
@@ -263,6 +266,7 @@ final class PanelController: NSObject, NSWindowDelegate {
         accessTimer = nil
         guard panel.isVisible else { return }
         panel.orderOut(nil)
+        lastClosed = Date()
     }
 
     func windowDidResignKey(_ notification: Notification) {
