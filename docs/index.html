@@ -158,6 +158,14 @@ kbd { font: 13px ui-monospace, Menlo, monospace; background: var(--code); border
 @media (max-width: 600px) {
   h1 br { display: none; }
   .brew code { white-space: normal; overflow-wrap: anywhere; }
+  table { min-width: 0; }
+  thead { display: none; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  tr { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 10px; }
+  td { border: 0; padding: 3px 0; display: flex; gap: 12px; }
+  td:first-child { font-size: 16px; padding-bottom: 6px; }
+  td:first-child::before { display: none; }
+  td::before { content: attr(data-label); color: var(--muted); flex: 0 0 76px; font-weight: 400; }
 }
 footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; text-align: center; border-top: 1px solid var(--line); }
 </style>
@@ -202,13 +210,13 @@ footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; text-align:
       <table>
         <thead><tr><th>App</th><th>Price</th><th>Source</th><th>Runs on</th></tr></thead>
         <tbody>
-        <tr><td>WolfClip</td><td>Free</td><td>Open source, Apache 2.0</td><td>macOS 14+, Linux</td></tr>
-        <tr><td>Maccy</td><td>Free on GitHub, $9.99 in the Mac App Store</td><td>Open source, MIT</td><td>macOS</td></tr>
-        <tr><td>CopyQ</td><td>Free</td><td>Open source, GPL-3.0</td><td>macOS, Linux, Windows</td></tr>
-        <tr><td>Spotlight clipboard</td><td>Built into macOS 26, off by default</td><td>Apple</td><td>macOS 26+</td></tr>
-        <tr><td>Raycast</td><td>Clipboard history in the free plan (3 months), Pro $10/month</td><td>Closed source</td><td>macOS</td></tr>
-        <tr><td>PastePal</td><td>Free, Pro $14.99 once</td><td>Closed source</td><td>macOS</td></tr>
-        <tr><td>Paste</td><td>$2.49/month or $29.99/year</td><td>Closed source</td><td>macOS</td></tr>
+        <tr><td data-label="App">WolfClip</td><td data-label="Price">Free</td><td data-label="Source">Open source, Apache 2.0</td><td data-label="Runs on">macOS 14+, Linux</td></tr>
+        <tr><td data-label="App">Maccy</td><td data-label="Price">Free on GitHub, $9.99 in the Mac App Store</td><td data-label="Source">Open source, MIT</td><td data-label="Runs on">macOS</td></tr>
+        <tr><td data-label="App">CopyQ</td><td data-label="Price">Free</td><td data-label="Source">Open source, GPL-3.0</td><td data-label="Runs on">macOS, Linux, Windows</td></tr>
+        <tr><td data-label="App">Spotlight clipboard</td><td data-label="Price">Built into macOS 26, off by default</td><td data-label="Source">Apple</td><td data-label="Runs on">macOS 26+</td></tr>
+        <tr><td data-label="App">Raycast</td><td data-label="Price">Clipboard history in the free plan (3 months), Pro $10/month</td><td data-label="Source">Closed source</td><td data-label="Runs on">macOS</td></tr>
+        <tr><td data-label="App">PastePal</td><td data-label="Price">Free, Pro $14.99 once</td><td data-label="Source">Closed source</td><td data-label="Runs on">macOS</td></tr>
+        <tr><td data-label="App">Paste</td><td data-label="Price">$2.49/month or $29.99/year</td><td data-label="Source">Closed source</td><td data-label="Runs on">macOS</td></tr>
         </tbody>
       </table>
     </div>
